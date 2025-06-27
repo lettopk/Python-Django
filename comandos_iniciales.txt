@@ -1,0 +1,16 @@
+##Comandos inciales desde la terminal:
+
+#instalar django
+py -m pip install Django==5.2.3
+
+#Crear proyecto de django
+django-admin startproject Projecto1
+
+#Activacion de proyecto para empezar
+cd Projecto1
+python manage.py migrate
+
+
+# iniciar servidor (basico)
+python manage.py runserver
+#ingresar a el link http://127.0.0.1:8000/ para confirmar qeu todo este funcionando
