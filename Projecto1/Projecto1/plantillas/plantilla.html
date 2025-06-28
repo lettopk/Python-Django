@@ -1,7 +1,34 @@
+
 <html>
     <body>
-    <h2 style="color:blue">
-    Hola mundo con django! Estamos usando nuestra primera pagina con plantilla
-    </h1>
-    </body>
+        {% include "superior/barra.html" %}
+        <h2 style="color:blue">
+            Hola mundo con django! Estamos usando nuestra primera pagina con plantilla
+        </h2>
+    {# No temas diseñador. ignora esta parte #}
+    {% comment %} Comentario de 
+                dos lineas
+    {% endcomment %}
+        {% if nombre_persona == "Marlon" %}
+            <p>El estudiante es letto</p>
+        {% else %}
+            <p>El estudiante es otro</p>
+        {% endif %}
+
+
+        <p>El nombre del estudiante es: {{nombre_persona|upper}} {{apellido_persona.upper}}</p>
+        <p>Estamos viendo el tema de la plantilla a dia: {{hora_actual.day}} / {{hora_actual.month}} / {{hora_actual.year}}</p>
+        <p><strong>Temas del curso:</strong></p>
+        <p>
+            <ul>
+             {% if temas %}
+                   {% for el_tema in temas%}
+                       <li>{{el_tema|first|lower}}</li>
+                    {% endfor %}
+                {% else %}
+                    <p>No hay Elementos que mostrar</p>
+                {% endif %}
+          </ul>
+         </p>    
+</body>
 </html>
