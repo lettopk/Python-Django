@@ -51,6 +51,14 @@ def saludo(request):            #Primera vista
             return HttpResponse(documento)
 """
 
+def curso_C(request):
+    fecha_actual = datetime.datetime.now()   
+    return render(request, "cursoC.html", {"fecha": fecha_actual})
+
+def curso_Css(request):
+    fecha_actual = datetime.datetime.now()   
+    return render(request, "cursoCSS.html", {"fecha": fecha_actual})
+
 def despedida(request):
     return HttpResponse('Adios mundo con django')
 

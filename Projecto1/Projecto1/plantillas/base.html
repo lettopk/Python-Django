@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <title>
+            {% block title %} {% endblock %}
+        </title>
+    </head>
+    <body>
+        <h1 style="background-color: darkblue; color:blanchedalmond; text-align: center;">LettoDev</h1>
+        {% include "superior/barra.html" %}
+        <h3 style="text-align: right;">Pruebas de programación</h3>
+        {% block content%} {% endblock %} 
+        <p style="background-color: darkblue; color:blanchedalmond; text-align: right;">Gracias por tu visita</p>
+    </body>
+</html>
