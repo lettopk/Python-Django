@@ -14,3 +14,46 @@ python manage.py migrate
 # iniciar servidor (basico)
 python manage.py runserver
 #ingresar a el link http://127.0.0.1:8000/ para confirmar qeu todo este funcionando
+
+#############################################
+#Crear proyecto de django
+django-admin startproject TiendaOnline
+
+#Creacion de la  primera aplicacion para empezar
+cd TiendaOnline
+python manage.py startapp
+
+#revision de que no haya erores 
+ python manage.py check gestionPedidos
+
+#Creacion de base de datos
+  python manage.py makemigrations
+
+#Creacion de tablas con porpiedades 
+ python manage.py sqlmigrate gestionPedidos 0001
+
+#Agrega las tables y propiedades para nuestra base de datos
+python manage.py migrate
+
+#como Manipular datos en la tabla 
+python manage.py shell
+>>> from gestionPedidos.models import articulos
+#Consulta de insertado (insert)
+>>> art = articulos(nombre='mesa',seccion='decoracion',precio=90)       #Crea instruccion SQL para insertar datos
+>>> art.save()                                                          #ejecuta la instruccion
+
+>>> art3 = articulos.objects.create(nombre='taladro',seccion='ferreteria',precio=65)    Crea instruccion  de insertado y la ejecuta 
+
+#Consulta de actualizacion (update)
+>>> art.precio=95
+>>> art.save()
+
+#Consulta de borrado (delete)
+>>> art4=articulos.objects.get(id =2)
+>>> art4.delete()
+
+#Consulta de seleccion de mostrado (select)
+>>> lista=articulos.objects.all()
+>>> lista.query.__str__()
+##consulta generada: 
+'SELECT "gestionPedidos_articulos"."id", "gestionPedidos_articulos"."nombre", "gestionPedidos_articulos"."seccion", "gestionPedidos_articulos"."precio" FROM "gestionPedidos_articulos"'
