@@ -150,3 +150,13 @@ class pedidos_admin(admin.ModelAdmin):
     date_hierarchy = "fecha"        ##"Miga de pan"
 
 #Cambiar el idioma
+en setting.py : LANGUAGE_CODE = 'en-us'
+
+####Trabajo con formularios
+#Creacion de formularios y envio de datos al servidor
+se crea archivo: busqueda productos.html
+se crea la funcion en views.py y se requistra la url en url.py
+
+#busqueda de informacion en BBDD
+
+
