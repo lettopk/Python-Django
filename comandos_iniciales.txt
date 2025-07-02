@@ -57,3 +57,96 @@ python manage.py shell
 >>> lista.query.__str__()
 ##consulta generada: 
 'SELECT "gestionPedidos_articulos"."id", "gestionPedidos_articulos"."nombre", "gestionPedidos_articulos"."seccion", "gestionPedidos_articulos"."precio" FROM "gestionPedidos_articulos"'
+
+
+#Configuracion de postgreSQL
+en pgadmin4 se crea la tabla "create database gestorpedidos"
+
+instalar libreria para gestion de postgreSLQ en la terminal: pip install psycopg2
+SE AGREGA LA BASE DE DATOS EN LOS SETTINGS DEL PROYECTO
+      DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'gestorpedidos',
+        'USER': 'postgres',
+        'PASSWORD': '0911',
+        'HOST': '127.0.0.1',
+        'DATABASE_PORT':'5432'
+    }
+}
+
+se hacen migracion en la terminal en la carpeta gestionPedidos:
+python manage.py makemigrations
+python manage.py migrate
+
+Argegar registros 
+ python manage.py shell
+ >>> from gestionPedidos.models import clientes
+ >>> cli = clientes(nombre="Letto", direccion="Mi casa", telefono = "12345678")
+ >>> cli.save()
+
+ Realizar consultas con criterios
+ python manage.py shell
+ >>>from gestionPedidos.models import articulos
+ >>>articulos.objects.filter(seccion ="decoracion") 
+
+ def __str__(self):                              #llamado de cadena de caracteres en la clase articulos en los modelos
+        return "el nombre es: %s la seccion es: %s el precio es %s" % (self.nombre, self.seccion, self.precio)
+
+python manage.py makemigrations
+python manage.py migrate 
+python manage.py shell
+>>> from gestionPedidos.models import articulos     
+>>> articulos.objects.filter(seccion ="decoracion")
+<QuerySet [<articulos: el nombre es: mesa la seccion es: decoracion el precio es 90>, <articulos: el nombre es: lampara la seccion es: decoracion el precio es 70>]>
+
+##Con dos  criterios
+>>> articulos.objects.filter(nombre= "mesa", seccion="decoracion")      
+<QuerySet [<articulos: el nombre es: mesa la seccion es: decoracion el precio es 90>]>
+
+##__gte = : > , __lte=  : < ,   __range(10,150) : entre
+>>> articulos.objects.filter(seccion="deportes" , precio__gte=25)  
+<QuerySet [<articulos: el nombre es: balon la seccion es: deportes el precio es 25>]>
+ 
+##ordenar de menor a mayor
+>>> articulos.objects.filter(precio__gte=50).order_by("precio")    
+<QuerySet [<articulos: el nombre es: lampara la seccion es: decoracion el precio es 70>, <articulos: el nombre es: mesa la seccion es: decoracion el precio es 90>]>
+
+##Ordenar de mayor a menor
+>>> articulos.objects.filter(precio__gte=50).order_by("-precio")    
+<QuerySet [<articulos: el nombre es: mesa la seccion es: decoracion el precio es 90>, <articulos: el nombre es: lampara la seccion es: decoracion el precio es 70>]>
+
+##Panel de administracion
+##Creacion de super usuario para administracion
+PS C:\Users\marlo\Favorites\python-django\tiendaonline> python manage.py createsuperuser
+Username (leave blank to use 'marlo'): marlonpk
+Email address: mtarazona97@uan.edu.co
+Password: 
+Password (again): 
+
+##Manipulacion de tablas desde el panel de admin
+admin.py se agregan los modelos:
+admin.site.register(clientes)
+admin.site.register(articulos)
+admin.site.register(pedidos)
+
+
+
+##Personalizacion de panel de administracion
+cambio de nombres en los campos
+en models.py: para el campo: direccion = models.CharField(max_length=50, verbose_name="La Direccion")
+
+## desde /admin ver los datos de las tablas
+en admin.py     class clientes_admin (admin.ModelAdmin):
+                   list_display = ("nombre","direccion","telefono")
+#Agrregar barra de busqueda:
+                   search_fields = ("nombre","telefono")
+
+#Agregar filtros
+en admin.py
+class pedidos_admin(admin.ModelAdmin):
+    list_display = ("numero","fecha")
+    list_filter = ("fecha",)
+    date_hierarchy = "fecha"        ##"Miga de pan"
+
+#Cambiar el idioma

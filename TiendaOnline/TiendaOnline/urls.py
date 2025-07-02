@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from gestionPedidos.views import busqueda_producto, buscar
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('busqueda_productos/', busqueda_producto), #url para el formulario
+    path('buscar/', buscar),                        #url para resultado de la busqueda
 ]
